@@ -1,0 +1,11 @@
+<h1><%= @book.title %></h1>
+<p><%= @book.author %></p>
+
+<p><%= @note.content if @note %></p>
+<p><%= @favequote.quotation if @favequote %></p>
+<p><%= "You first read this book in #{@lityear.year_read if @lityear}." %></p>
+<p><%= "You rated this book a #{@rating.stars if @rating} out of 5." %></p>
+
+<%= link_to "Edit Book", edit_book_path(@book) %>
+<%= link_to "Delete Book", book_path(@book), method: :delete, data: { confirm: 'Are you sure you would like to permanently delete this book from your collection?' } %>
+<%= link_to "Return Home", books_path %>

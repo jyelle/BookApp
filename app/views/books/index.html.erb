@@ -1,0 +1,23 @@
+<h1>Welcome to ShouldReads!</h1>
+<p>Browse, modify, and expand your virtual book collection.</p>
+<h3><%= link_to '+ Add New Book', new_book_path %></h3>
+
+<%= form_tag "/", method: "GET" do %>
+  <%= text_field_tag :q %>
+  <%= submit_tag "Search" %>
+<% end %>
+
+<br><hr>
+
+<% if @books.any? %>
+<% @books.each do |book| %>
+	<section>
+    	<h3><%= link_to book.title, book %></h3>
+  	</section>
+  	<hr>
+<%end%>
+<% else %>
+  <h4>Sorry, no books matched your query.</h4>
+<% end %>
+</body>
+
