@@ -1,3 +1,5 @@
+<form>
+<fieldset>
 <%= flash[:error] %>
 <%=  form_for @book do |f| %>
   <div>
@@ -9,36 +11,48 @@
     <%=  f.text_field :author %>
   </div>
   <div>
-    <%= f.fields_for :notes do |notes_form| %>
-     
-        <%= notes_form.label :content, 'What was this book about and what insights did you gain from it?' %>
-        <%= notes_form.text_field :content %>
-      
+    <% @book.notes.find_or_initialize_by(user_id: current_user.id).tap do |note| %>
+      <%= f.fields_for :notes, note do |notes_form| %>
+       
+          <%= notes_form.label :content, 'What was this book about and what insights did you gain from it?' %>
+          <%= notes_form.text_field :content %>
+          <%= notes_form.hidden_field :user_id %>
+        
+      <% end %>
     <% end %>
   </div>
   <div>
-    <%= f.fields_for :favequotes do |favequotes_form| %>
-      
-        <%= favequotes_form.label :quotation, 'What is your favorite quotation from this book?' %>
-        <%= favequotes_form.text_field :quotation %>
+    <% @book.favequotes.find_or_initialize_by(user_id: current_user.id).tap do |favequote| %>
+      <%= f.fields_for :favequotes, favequote do |favequotes_form| %>
+        
+          <%= favequotes_form.label :quotation, 'What is your favorite quotation from this book?' %>
+          <%= favequotes_form.text_field :quotation %>
+          <%= favequotes_form.hidden_field :user_id %>
   
+      <% end %>
     <% end %>
   </div>
   <div>
-    <%= f.fields_for :lityears do |lityears_form| %>
+  <% @book.lityears.find_or_initialize_by(user_id: current_user.id).tap do |lityear| %>
+    <%= f.fields_for :lityears, lityear do |lityears_form| %>
      
         <%= lityears_form.label :year_read, 'In which year did you first read this book?' %>
         <%= lityears_form.text_field :year_read %>
-     
+        <%= lityears_form.hidden_field :user_id %>
+        <% end %>
     <% end %>
     </div>
     <div>
-    <%= f.fields_for :ratings do |ratings_form| %>
+    <% @book.ratings.find_or_initialize_by(user_id: current_user.id).tap do |rating| %>
+    <%= f.fields_for :ratings, rating do |ratings_form| %>
     
         <%= ratings_form.label :stars, "How much did you love this book (on a scale of 1 to 5)?" %>
         <%= ratings_form.text_field :stars %>
-     
+        <%= ratings_form.hidden_field :user_id %>   
+        <% end %>
     <% end %>
     </div>
   <%=  f.submit "Submit" %>
 <% end %>
+</fieldset>
+</form>

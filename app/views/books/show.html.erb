@@ -1,11 +1,34 @@
-<h1><%= @book.title %></h1>
-<p><%= @book.author %></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div class="container">
+	<ul class="nav nav-list">
+	    <li class="active"><a href="#"><i class="icon-home icon-white"></i> Home</a></li>
+	 </ul>
 
-<p><%= @note.content if @note %></p>
-<p><%= @favequote.quotation if @favequote %></p>
-<p><%= "You first read this book in #{@lityear.year_read if @lityear}." %></p>
-<p><%= "You rated this book a #{@rating.stars if @rating} out of 5." %></p>
+	<h1><%= @book.title %></h1>
+	<p><em>by <%= @book.author %></em></p>
+	<h3>Your Notes:</h3>
+	<p><%= @note.content if @note %></p>
+	<h3>Favorite Quotation:</h3>
+	<p><%= @favequote.quotation if @favequote %></p>
+	<h3>Year Read:</h3>
+	<p>You first read this book in <%= @lityear.year_read if @lityear %>.</p>
+	<h3>Your Rating:</h3>
+	<p>You have rated this book a <%=  @rating.stars if @rating %> out of 5.</p>
 
-<%= link_to "Edit Book", edit_book_path(@book) %>
-<%= link_to "Delete Book", book_path(@book), method: :delete, data: { confirm: 'Are you sure you would like to permanently delete this book from your collection?' } %>
-<%= link_to "Return Home", books_path %>
+
+	<ul>
+		<% @book.notes.where.not(user_id: current_user.id).each do |note| %>
+			<li><%= note.content %></li>
+		<% end %>
+	</ul>
+
+	<%= link_to "Edit Book", edit_book_path(@book) %>
+	<%= link_to "Delete Book", book_path(@book), method: :delete, data: { confirm: 'Are you sure you would like to permanently delete this book from your collection?' } %>
+	</div>
+</body>
+</html>

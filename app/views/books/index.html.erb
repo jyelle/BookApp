@@ -1,12 +1,15 @@
-<h1>Welcome to ShouldReads!</h1>
-<p>Browse, modify, and expand your virtual book collection.</p>
+<!DOCTYPE html>
+<html lang="en">
+    <div class="jumbotron">
+    	<h1 class="text-center">Welcome to ShouldReads</h1>
+    	<h2 class="text-center"><em>Browse, modify, and expand your virtual book collection.</em></h2>
+    </div>
+	
+		<%= form_tag "/", method: "GET" do %>
+ 		<%= text_field_tag :q %>
+  		<%= submit_tag "Search" %>
+	<% end %>
 <h3><%= link_to '+ Add New Book', new_book_path %></h3>
-
-<%= form_tag "/", method: "GET" do %>
-  <%= text_field_tag :q %>
-  <%= submit_tag "Search" %>
-<% end %>
-
 <br><hr>
 
 <% if @books.any? %>
@@ -20,4 +23,5 @@
   <h4>Sorry, no books matched your query.</h4>
 <% end %>
 </body>
+</html>
 
