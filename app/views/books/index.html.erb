@@ -16,12 +16,11 @@
 <% @books.each do |book| %>
 	<section>
     	<h3><%= link_to book.title, book %></h3>
+      <hr>
   	</section>
-  	<hr>
 <%end%>
 <% else %>
   <h4>Sorry, no books matched your query.</h4>
 <% end %>
-</body>
 </html>
 
